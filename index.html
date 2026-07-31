@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bible Quiz 2026 · Nagercoil Division</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root{
+    --crimson:#7A1E2E;
+    --crimson-deep:#5A1420;
+    --navy:#16233B;
+    --gold:#C79A3E;
+    --parchment:#F4EEDD;
+    --ink:#201A14;
+    --paper:#FBF8F1;
+    --line:rgba(32,26,20,0.14);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--parchment);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .bg-texture{
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(122,30,46,0.05), transparent 40%),
+      radial-gradient(circle at 85% 0%, rgba(199,154,62,0.10), transparent 35%);
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- topbar ---------- */
+  .topbar{
+    background:var(--navy);
+    color:var(--parchment);
+    padding:14px 0;
+    border-bottom:3px solid var(--gold);
+  }
+  .topbar .wrap{display:flex;align-items:center;justify-content:center;gap:14px;text-align:center;}
+  .topbar .titles{line-height:1.25;}
+  .topbar .titles .t1{font-family:'Fraunces',serif;font-weight:700;font-size:24px;letter-spacing:.05em;}
+  .topbar .titles .t2{font-size:15px;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-top:4px;}
+
+  /* ---------- hero ---------- */
+  .hero{padding:56px 0 40px;text-align:center;position:relative;}
+  .hero .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--crimson);margin-bottom:14px;
+  }
+  .hero h1{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:clamp(40px,7vw,68px);
+    line-height:0.98;
+    margin:0 0 10px;
+    color:var(--navy);
+  }
+  .hero h1 em{color:var(--crimson);font-style:italic;font-weight:500;}
+  .hero .verse-line{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:500;
+    color:#5a4f3d;font-size:16px;margin:14px auto 0;max-width:560px;
+  }
+  .book-strip{
+    margin-top:26px;display:flex;justify-content:center;flex-wrap:wrap;
+    gap:8px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+    letter-spacing:.03em;
+  }
+  .book-strip span{
+    border:1px solid var(--line);background:var(--paper);color:var(--navy);
+    padding:6px 12px;border-radius:2px;
+  }
+
+  /* ---------- facts strip ---------- */
+  .facts{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    margin-top:40px;
+  }
+  .facts .f{padding:20px 10px;text-align:center;border-left:1px solid var(--line);}
+  .facts .f:first-child{border-left:none;}
+  .facts .f .num{font-family:'Fraunces',serif;font-weight:700;font-size:26px;color:var(--crimson);}
+  .facts .f .lab{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:#6b5f4d;margin-top:4px;}
+  @media(max-width:640px){.facts{grid-template-columns:repeat(2,1fr);} .facts .f:nth-child(3){border-left:none;}}
+
+  /* ---------- section heads ---------- */
+  .section{padding:52px 0;}
+  .section-head{margin-bottom:28px;}
+  .section-head .kicker{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--gold-dk,#96742a);margin-bottom:6px;
+  }
+  .section-head h2{
+    font-family:'Fraunces',serif;font-weight:700;font-size:30px;margin:0;color:var(--navy);
+  }
+
+  /* ---------- form ---------- */
+  .card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:2px;
+    box-shadow:0 1px 2px rgba(32,26,20,0.04);
+  }
+  form{padding:36px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr;}}
+  .field{margin-bottom:20px;}
+  .field-row{
+    display:flex;align-items:center;gap:16px;margin-bottom:18px;
+  }
+  .field-row label{
+    flex:0 0 150px;font-size:12.5px;font-weight:600;color:var(--navy);
+    letter-spacing:.02em;margin-bottom:0;
+  }
+  .field-row .control{flex:1;min-width:0;}
+  @media(max-width:560px){
+    .field-row{flex-direction:column;align-items:stretch;gap:6px;}
+    .field-row label{flex:none;}
+  }
+  .field label{
+    display:block;font-size:12.5px;font-weight:600;color:var(--navy);
+    margin-bottom:7px;letter-spacing:.02em;
+  }
+  .field .req, .field-row .req{color:var(--crimson);}
+  .field input[type=text],
+  .field input[type=number],
+  .field input[type=tel],
+  .field select,
+  .field-row input[type=text],
+  .field-row input[type=number],
+  .field-row input[type=tel],
+  .field-row select{
+    width:100%;padding:11px 13px;font-family:'Inter',sans-serif;font-size:14.5px;
+    border:1px solid var(--line);background:#fff;border-radius:2px;color:var(--ink);
+    transition:border-color .15s;
+  }
+  .field input:focus,.field select:focus,
+  .field-row input:focus,.field-row select:focus{outline:none;border-color:var(--crimson);}
+  .field .hint{font-size:11.5px;color:#8a7d67;margin-top:5px;}
+  .upload{
+    border:1.5px dashed var(--line);border-radius:2px;padding:18px;text-align:center;
+    background:#fff;cursor:pointer;position:relative;
+  }
+  .upload:hover{border-color:var(--gold);}
+  .upload input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+  .upload .up-label{font-size:13px;color:var(--navy);font-weight:600;}
+  .upload .up-sub{font-size:11px;color:#9a8d76;margin-top:3px;}
+  .upload.has-file{border-style:solid;border-color:var(--crimson);}
+  .upload .preview{max-height:70px;margin-top:8px;border-radius:2px;display:none;}
+
+  .fee-note{
+    background:#fbf3e6;border:1px solid var(--gold);border-radius:2px;
+    padding:14px 18px;font-size:13.5px;color:#5a4419;margin-bottom:24px;
+    line-height:1.6;
+  }
+  .fee-note b{color:var(--crimson);}
+  @media(max-width:640px){
+    .fee-note{font-size:12.5px;}
+  }
+
+  .submit-btn{
+    width:100%;padding:15px;background:var(--crimson);color:#fff;border:none;
+    font-family:'Fraunces',serif;font-weight:600;font-size:16px;letter-spacing:.02em;
+    border-radius:2px;cursor:pointer;transition:background .15s;
+  }
+  .submit-btn:hover{background:var(--crimson-deep);}
+  .submit-btn:disabled{background:#b9ab94;cursor:wait;}
+  .error-box{
+    display:none;background:#fbe9ea;border:1px solid var(--crimson);color:var(--crimson-deep);
+    padding:12px 14px;border-radius:2px;font-size:13px;margin-bottom:18px;
+  }
+
+  /* ---------- confirmation ---------- */
+  #confirmSection{display:none;padding:52px 0 80px;}
+  .confirm-msg{text-align:center;margin-bottom:30px;}
+  .confirm-msg .check{
+    width:52px;height:52px;border-radius:50%;background:var(--crimson);color:#fff;
+    display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:26px;
+  }
+  .confirm-msg h2{font-family:'Fraunces',serif;font-size:26px;margin:0 0 6px;color:var(--navy);}
+  .confirm-msg p{color:#6b5f4d;font-size:14px;margin:0;}
+
+  .print-actions{display:flex;justify-content:center;gap:12px;margin-bottom:30px;}
+  .btn-outline{
+    padding:11px 22px;border:1.5px solid var(--navy);background:transparent;color:var(--navy);
+    font-family:'Inter',sans-serif;font-weight:600;font-size:13.5px;border-radius:2px;cursor:pointer;
+  }
+  .btn-outline:hover{background:var(--navy);color:#fff;}
+  .btn-solid{
+    padding:11px 22px;border:1.5px solid var(--crimson);background:var(--crimson);color:#fff;
+    font-family:'Inter',sans-serif;font-weight:600;font-size:13.5px;border-radius:2px;cursor:pointer;
+  }
+  .btn-solid:hover{background:var(--crimson-deep);}
+
+  /* the printable card */
+  #cardStage{display:flex;justify-content:center;}
+  .id-card{
+    width:400px;background:var(--paper);border:1px solid var(--line);
+    box-shadow:0 8px 24px rgba(22,35,59,0.12);position:relative;overflow:hidden;
+  }
+  .id-card .band{
+    background:var(--navy);color:var(--parchment);padding:16px 20px 14px;
+    display:flex;align-items:center;justify-content:center;text-align:center;gap:12px;border-bottom:3px solid var(--gold);
+  }
+  .id-card .band .t1{font-family:'Fraunces',serif;font-weight:700;font-size:13.5px;letter-spacing:.05em;}
+  .id-card .band .t2{font-size:9.5px;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-top:2px;}
+  .id-card .event-strip{
+    text-align:center;padding:12px 16px 10px;border-bottom:1px solid var(--line);
+  }
+  .id-card .event-strip .ev{font-family:'Fraunces',serif;font-weight:700;font-size:19px;color:var(--crimson);letter-spacing:.01em;}
+  .id-card .event-strip .yr{font-size:10px;letter-spacing:.16em;color:#8a7d67;text-transform:uppercase;margin-top:2px;}
+  .id-card .body-row{display:flex;align-items:center;padding:18px 20px;gap:16px;}
+  .id-card .photo-box{
+    width:84px;height:100px;flex:none;border:1px solid var(--line);background:#fff;
+    display:flex;align-items:center;justify-content:center;overflow:hidden;
+  }
+  .id-card .photo-box img{width:100%;height:100%;object-fit:cover;}
+  .id-card .photo-box .ph-empty{font-size:9px;color:#b3a68f;text-align:center;padding:6px;}
+  .id-card .info{flex:1;min-width:0;}
+  .id-card .info .name{font-family:'Fraunces',serif;font-weight:700;font-size:17px;color:var(--ink);line-height:1.2;}
+  .id-card .info .row{font-size:11.5px;color:#5a4f3d;margin-top:6px;display:flex;justify-content:space-between;}
+  .id-card .info .row .k{color:#9a8d76;}
+  .id-card .info .row .v{font-weight:600;color:var(--ink);}
+  .id-card .regno{
+    font-family:'IBM Plex Mono',monospace;background:var(--parchment);border:1px dashed var(--gold);
+    text-align:center;padding:6px;margin:0 20px 16px;font-size:13px;letter-spacing:.08em;color:var(--crimson-deep);
+  }
+  .id-card .qr-row{display:flex;align-items:center;justify-content:center;gap:14px;padding:0 20px 20px;}
+  #qrcode{padding:6px;background:#fff;border:1px solid var(--line);}
+  .id-card .qr-cap{font-size:9.5px;color:#8a7d67;max-width:150px;line-height:1.4;}
+
+  footer.site-footer{
+    text-align:center;padding:26px 0 40px;font-size:12px;color:#8a7d67;
+    border-top:1px solid var(--line);
+  }
+  footer.site-footer b{color:var(--navy);}
+
+  @media print{
+    body *{visibility:hidden;}
+    .id-card,.id-card *{visibility:visible;}
+    .id-card{position:absolute;top:0;left:0;box-shadow:none;border:1px solid #000;}
+  }
+</style>
+</head>
+<body class="bg-texture">
+
+  <div class="topbar">
+    <div class="wrap">
+      <div class="titles">
+        <div class="t1">THE SALVATION ARMY</div>
+        <div class="t2">Nagercoil Division</div>
+      </div>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow">Registration now open</div>
+      <h1>Bible Quiz <em>2026</em></h1>
+      <p class="verse-line">"Thy word is a lamp unto my feet, and a light unto my path." — Psalm 119:105</p>
+      <div class="book-strip">
+        <span>Joshua</span><span>Judges</span><span>Ruth</span><span>1 Samuel</span><span>2 Samuel</span><span>1 Kings</span><span>2 Kings</span><span>1 Chronicles</span><span>2 Chronicles</span>
+      </div>
+    </div>
+    <div class="facts">
+      <div class="f"><div class="num">18–81</div><div class="lab">Age (years)</div></div>
+      <div class="f"><div class="num">₹100</div><div class="lab">Reg. fee</div></div>
+      <div class="f" style="grid-column:span 2;"><div class="num" style="font-size:18px;">01–17 Aug 2026</div><div class="lab">Registration Window</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Enrolment</div>
+        <h2>Register your participation</h2>
+      </div>
+
+      <div class="card">
+        <form id="regForm">
+          <div class="fee-note">
+            🎗 When paying via GPay or any other payment app, please <b>mention the participant's name in the payment note / remarks</b> so it can be matched — then attach your receipt below.
+          </div>
+          <div id="errorBox" class="error-box"></div>
+
+          <div class="field-row">
+            <label>Full Name <span class="req">*</span></label>
+            <div class="control"><input type="text" id="fullName" required placeholder="As per ID card"></div>
+          </div>
+
+          <div class="field-row">
+            <label>Age <span class="req">*</span></label>
+            <div class="control"><input type="number" id="age" min="18" max="81" required placeholder="18–81"></div>
+          </div>
+
+          <div class="field-row">
+            <label>Gender <span class="req">*</span></label>
+            <div class="control">
+              <select id="gender" required>
+                <option value="" disabled selected>Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <label>Corps <span class="req">*</span></label>
+            <div class="control">
+            <select id="corps" required>
+              <option value="" disabled selected>Select your corps</option>
+              <option value="Beema Nagar">Beema Nagar</option>
+              <option value="BTMC">BTMC</option>
+              <option value="Chunkankadai">Chunkankadai</option>
+              <option value="Chadayankulam">Chadayankulam</option>
+              <option value="Elanthaiyady">Elanthaiyady</option>
+              <option value="Eluppayady">Eluppayady</option>
+              <option value="Elankadai">Elankadai</option>
+              <option value="Iykiyapuram">Iykiyapuram</option>
+              <option value="Kunnuvilai">Kunnuvilai</option>
+              <option value="Kadety">Kadety</option>
+              <option value="Kannankulam">Kannankulam</option>
+              <option value="Kothankulam">Kothankulam</option>
+              <option value="Kulasekeramputhoor">Kulasekeramputhoor</option>
+              <option value="Karayankuzhi">Karayankuzhi</option>
+              <option value="Kanniyakulam Parayady">Kanniyakulam Parayady</option>
+              <option value="Karuppukottai">Karuppukottai</option>
+              <option value="Kulathoor">Kulathoor</option>
+              <option value="Pandarathoppu">Pandarathoppu</option>
+              <option value="Puthugrammam">Puthugrammam</option>
+              <option value="Paulkulam">Paulkulam</option>
+              <option value="Paraiyady">Paraiyady</option>
+              <option value="Thirupathisaram">Thirupathisaram</option>
+              <option value="Thathiyarkulam">Thathiyarkulam</option>
+              <option value="Vadasery">Vadasery</option>
+            </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Face Photo <span class="req">*</span></label>
+            <div class="upload" id="photoUpload">
+              <input type="file" id="photoFile" accept="image/*" capture="user" required>
+              <div class="up-label">🤳 Tap to take a selfie (front camera)</div>
+              <div class="up-sub">Live front-camera photo of your face only — clear, no filters, no group photos.</div>
+              <img class="preview" id="photoPreview">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Payment Receipt <span style="color:#8a7d67;font-weight:400;">(optional)</span></label>
+            <div class="upload" id="receiptUpload">
+              <input type="file" id="receiptFile" accept="image/*,.pdf">
+              <div class="up-label">🧾 Tap to upload receipt</div>
+              <div class="up-sub">Screenshot of ₹100 payment — name should be in the payment note</div>
+              <img class="preview" id="receiptPreview">
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submitBtn">Complete Registration</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="confirmSection">
+    <div class="wrap">
+      <div class="confirm-msg">
+        <div class="check">✓</div>
+        <h2>You're registered!</h2>
+        <p>Your confirmation card is ready. Please print it and bring it on the day of the quiz.</p>
+      </div>
+      <div class="print-actions">
+        <button class="btn-solid" onclick="window.print()">🖨 Print Card</button>
+        <button class="btn-outline" onclick="location.reload()">Register another participant</button>
+      </div>
+      <div id="cardStage">
+        <div class="id-card" id="idCard">
+          <div class="band">
+            <div>
+              <div class="t1">THE SALVATION ARMY</div>
+              <div class="t2">Nagercoil Division</div>
+            </div>
+          </div>
+          <div class="event-strip">
+            <div class="ev">BIBLE QUIZ</div>
+            <div class="yr">2026 · Confirmation Card</div>
+          </div>
+          <div class="body-row">
+            <div class="photo-box"><img id="cardPhoto" src="" alt=""><span class="ph-empty" id="cardPhotoEmpty">PHOTO</span></div>
+            <div class="info">
+              <div class="name" id="cardName">—</div>
+            </div>
+          </div>
+          <div class="regno" id="cardRegNo">REG NO. —</div>
+          <div class="qr-row">
+            <div id="qrcode"></div>
+            <div class="qr-cap">Scan at reception for check-in. Keep this card safe.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <b>THE SALVATION ARMY</b> · Nagercoil Division · Bible Quiz 2026
+  </footer>
+
+<script>
+/* =====================================================================
+   CONFIGURATION
+   Replace with your deployed Google Apps Script Web App URL.
+   The Apps Script writes each registration as a row into:
+   https://docs.google.com/spreadsheets/d/1vtGZb87ULsrYpTFmU4c-IuJkYXezxNx9aLvtlH4ENE0/edit
+   See Code.gs for the matching backend template.
+===================================================================== */
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcV-uunKVh_nbFftOezZ1wfQBSXlmn1bI6AQcddqidkbPq3LRAR-wdBWrseLW1lzXY/exec";
+
+function fileToBase64(file){
+  return new Promise((resolve,reject)=>{
+    const r = new FileReader();
+    r.onload = ()=> resolve(r.result.split(",")[1]);
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+
+function wirePreview(uploadId, inputId, previewId){
+  const box = document.getElementById(uploadId);
+  const input = document.getElementById(inputId);
+  const preview = document.getElementById(previewId);
+  input.addEventListener("change", ()=>{
+    const f = input.files[0];
+    if(!f) return;
+    box.classList.add("has-file");
+    if(f.type.startsWith("image/")){
+      const reader = new FileReader();
+      reader.onload = e => { preview.src = e.target.result; preview.style.display="block"; };
+      reader.readAsDataURL(f);
+    }
+    box.querySelector(".up-label").textContent = "✓ " + f.name;
+  });
+}
+wirePreview("photoUpload","photoFile","photoPreview");
+wirePreview("receiptUpload","receiptFile","receiptPreview");
+
+function genRegNo(corps){
+  const prefix = (corps || "XXXX").toUpperCase().replace(/[^A-Z]/g, "").padEnd(4, "X").slice(0, 4);
+  return prefix + "001";
+}
+
+document.getElementById("regForm").addEventListener("submit", async (e)=>{
+  e.preventDefault();
+  const errorBox = document.getElementById("errorBox");
+  errorBox.style.display = "none";
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true;
+  btn.textContent = "Submitting…";
+
+  try{
+    const fullName = document.getElementById("fullName").value.trim();
+    const age = document.getElementById("age").value;
+    const gender = document.getElementById("gender").value;
+    const corps = document.getElementById("corps").value.trim();
+    const photoFile = document.getElementById("photoFile").files[0];
+    const receiptFile = document.getElementById("receiptFile").files[0];
+    let regNo = genRegNo(corps); // fallback; replaced by the server's sequential number below
+
+    let photoBase64 = null, receiptBase64 = null;
+    if(photoFile) photoBase64 = await fileToBase64(photoFile);
+    if(receiptFile) receiptBase64 = await fileToBase64(receiptFile);
+
+    const payload = {
+      fullName, age, gender, corps,
+      photoFileName: photoFile ? photoFile.name : "",
+      photoBase64,
+      receiptFileName: receiptFile ? receiptFile.name : "",
+      receiptBase64,
+      timestamp: new Date().toISOString()
+    };
+
+    if(APPS_SCRIPT_URL && APPS_SCRIPT_URL.indexOf("PASTE_YOUR") === -1){
+      const res = await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        headers: {"Content-Type":"text/plain;charset=utf-8"},
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if(!data.success) throw new Error(data.error || "Could not save your registration. Please try again.");
+      if(data.regNo) regNo = data.regNo; // use the server's sequential reg number (corps prefix + 001, 002...)
+    } else {
+      console.warn("APPS_SCRIPT_URL not configured — skipping save, showing card locally only.");
+    }
+
+    document.getElementById("cardName").textContent = fullName;
+    document.getElementById("cardRegNo").textContent = "REG NO. " + regNo;
+    if(photoFile){
+      const img = document.getElementById("cardPhoto");
+      img.src = document.getElementById("photoPreview").src;
+      img.style.display = "block";
+      document.getElementById("cardPhotoEmpty").style.display = "none";
+    }
+
+    document.getElementById("qrcode").innerHTML = "";
+    new QRCode(document.getElementById("qrcode"), {
+      text: JSON.stringify({regNo, fullName, corps}),
+      width: 96, height: 96,
+      colorDark: "#16233B", colorLight: "#ffffff"
+    });
+
+    document.querySelector(".section").style.display = "none";
+    document.getElementById("confirmSection").style.display = "block";
+    window.scrollTo({top:0, behavior:"smooth"});
+
+  }catch(err){
+    const friendly = (err.message && err.message.toLowerCase().includes("fetch"))
+      ? "Couldn't reach the server. Please check your internet connection and try again."
+      : (err.message || "Something went wrong. Please try again.");
+    errorBox.textContent = "⚠ " + friendly;
+    errorBox.style.display = "block";
+    btn.disabled = false;
+    btn.textContent = "Complete Registration";
+  }
+});
+</script>
+</body>
+</html>
